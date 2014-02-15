@@ -15,8 +15,6 @@
 %    ok.
 
 dispatch() ->
-            [
-             {'_',
               [
                {"/socket.io/1/[...]", socketio_handler,
                 [socketio_session:configure([
@@ -25,9 +23,7 @@ dispatch() ->
                  {session_timeout, 30000},
                  {callback, ?MODULE},
                  {protocol, socketio_data_protocol}])]}
-              ]
-             }
-            ].
+              ].
 
 -define(REQPATH, null).
 
