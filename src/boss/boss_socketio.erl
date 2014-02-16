@@ -1,18 +1,21 @@
 -module(boss_socketio).
 
+-export([start/0]).
 -export([dispatch/0, open/3, recv/4, handle_info/4, close/3]).
 
 %-record(session_state, {}).
 
-%start() ->
-%    ok = application:start(sasl),
-%    ok = application:start(crypto),
-%    ok = application:start(public_key),
-%    ok = application:start(ssl),
-%    ok = application:start(ranch),
-%    ok = application:start(cowboy),
-%    ok = application:start(socketio),
-%    ok.
+
+start() ->
+    application:start(sasl),
+    application:start(crypto),
+    application:start(asn1),
+    application:start(public_key),
+    application:start(ssl),
+    application:start(ranch),
+    application:start(cowboy),
+    ok = application:start(socketio),
+    ok.
 
 dispatch() ->
               [

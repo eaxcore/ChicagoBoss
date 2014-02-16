@@ -230,9 +230,10 @@ handle_info(timeout, State) ->
             % [{"/", boss_mochicow_handler, []}],
             %Dispatch = [{'_',
 
+            ok = boss_socketio:start(),
             SocketIoDispatch = boss_socketio:dispatch(),
 
-            Dispatch = [{'_', AppStaticDispatches ++ BossDispatch ++ SocketIoDispatch}],
+            Dispatch = [{'_', AppStaticDispatches ++ SocketIoDispatch ++ BossDispatch}],
             CowboyListener = case boss_env:get_env(ssl_enable, false) of
                 true -> boss_https_listener;
                 _ -> boss_http_listener

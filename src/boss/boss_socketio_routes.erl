@@ -10,7 +10,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, null, []).
 
 init(_Args) ->
-    State = #socketio_routes{routes=ets:new(socketio_routes, [])},
+    State = #socketio_routes{routes=ets:new(socketio_routes, [set, named_table])},
     {ok, State}.
 
 request(Msg) ->
@@ -31,8 +31,8 @@ handle_call({get_route, ReqPath}, _From, State) ->
     Routes = State#socketio_routes.routes,
     R = ets:lookup(Routes, ReqPath),
     case R of
-        [{ReqPath, Module}] -> {ok, {ok, Module}, State};
-        _ -> {ok, notfound, State}
+        [{ReqPath, Module}] -> {reply, {ok, Module}, State};
+        _ -> {reply, notfound, State}
     end;
 
 handle_call(UnknownCall, _From, State) ->
