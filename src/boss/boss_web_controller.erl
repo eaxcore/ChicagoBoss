@@ -53,6 +53,9 @@ init(Config) ->
         true -> lager:start()
     end,
 
+    ok = boss_socketio:start(),
+    boss_socketio_routes:start_link(),
+
     application:start(elixir),
 
     Env = boss_env:setup_boss_env(),
@@ -230,7 +233,6 @@ handle_info(timeout, State) ->
             % [{"/", boss_mochicow_handler, []}],
             %Dispatch = [{'_',
 
-            ok = boss_socketio:start(),
             SocketIoDispatch = boss_socketio:dispatch(),
 
             Dispatch = [{'_', AppStaticDispatches ++ SocketIoDispatch ++ BossDispatch}],
